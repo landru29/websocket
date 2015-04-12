@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Socket.io</title>
+</head>
+
+<body>
+<h1>Communication avec socket.io !</h1>
+
+<textarea id="message"></textarea>
+<p><input type="button" value="Send" id="poke" /></p>
+<div id="communication"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script>
+    var socket = io.connect('http://www.noopy.fr:8080');
+    socket.on('message', function(message) {
+        $('div#communication').append('<p>' + message + '</p>');
+    });
+
+    $('#poke').click(function () {
+        var message = $('textarea#message').val();
+        $('textarea#message').val('');
+        socket.emit('message', message);
+    })
+</script>
+</body>
+</html>
